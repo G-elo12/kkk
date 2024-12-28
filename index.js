@@ -130,7 +130,7 @@ const app = express();
 app.use(cors());
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, { cors: { origin: "https://match-sv54.vercel.app/" } });
 
 let clients = 0;
 let looking_for_a_partner = [];
