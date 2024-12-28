@@ -128,9 +128,26 @@ import cors from "cors";
 const app = express();
 
 app.use(cors());
+const allowedOrigins = [
+  "https://match-sv54-ha5ranq63-g-elo12s-projects.vercel.app",
+  "http://localhost:3000",
+  "https://match-sv54.vercel.app/",
+"https://match-sv54-git-main-g-elo12s-projects.vercel.app/",
+"https://match-sv54-ha5ranq63-g-elo12s-projects.vercel.app/"
+];
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "match-sv54-ha5ranq63-g-elo12s-projects.vercel.app" } });
+const io = new Server(server, {  cors: {
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("No permitido por CORS"));
+    }
+  },
+  methods: ["GET", "POST"],
+  credentials: true
+} });
 
 let clients = 0;
 let looking_for_a_partner = [];
